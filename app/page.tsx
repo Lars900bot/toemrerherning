@@ -43,10 +43,33 @@ function LocalBusinessSchema() {
   );
 }
 
+function FAQSchema() {
+  if (config.homepage.faq.length === 0) return null;
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: config.homepage.faq.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+  };
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
 export default function HomePage() {
   return (
     <>
       <LocalBusinessSchema />
+      <FAQSchema />
 
       {/* Hero */}
       <section className="bg-[#1e3a5f] text-white py-16 md:py-24">
@@ -126,8 +149,45 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Content Sections */}
+      {config.homepage.contentSections.map((section, i) => (
+        <section key={i} className={i % 2 === 0 ? "py-16" : "py-16 bg-gray-100"}>
+          <div className="max-w-4xl mx-auto px-4">
+            <h2 className="text-3xl font-bold text-[#1e3a5f] mb-6 text-center">
+              {section.title}
+            </h2>
+            {section.paragraphs.map((p, j) => (
+              <p key={j} className="text-gray-700 leading-relaxed mb-4">
+                {p}
+              </p>
+            ))}
+          </div>
+        </section>
+      ))}
+
+      {/* FAQ */}
+      {config.homepage.faq.length > 0 && (
+        <section className="py-16 bg-gray-100">
+          <div className="max-w-4xl mx-auto px-4">
+            <h2 className="text-3xl font-bold text-[#1e3a5f] mb-10 text-center">
+              Ofte stillede spørgsmål
+            </h2>
+            <div className="space-y-6">
+              {config.homepage.faq.map((item, i) => (
+                <div key={i} className="bg-white rounded-lg shadow p-6">
+                  <h3 className="text-lg font-bold text-[#1e3a5f] mb-2">
+                    {item.question}
+                  </h3>
+                  <p className="text-gray-700 leading-relaxed">{item.answer}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Cluster-links */}
-      <section className="py-16 bg-gray-100">
+      <section className="py-16">
         <div className="max-w-6xl mx-auto px-4">
           <h2 className="text-3xl font-bold text-[#1e3a5f] mb-10 text-center">
             Se alle vores ydelser
