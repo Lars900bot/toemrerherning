@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import config from "@/lib/site-config";
+import Logo from "@/components/Logo";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -10,8 +11,8 @@ export default function Header() {
   return (
     <header className="bg-[#1e3a5f] text-white sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-        <Link href="/" className="text-xl font-bold">
-          {config.companyName}
+        <Link href="/">
+          <Logo />
         </Link>
 
         <nav className="hidden md:flex items-center gap-6">

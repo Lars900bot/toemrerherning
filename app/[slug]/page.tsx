@@ -95,28 +95,19 @@ export default async function ClusterPage({
         </div>
       </section>
 
-      {/* Internal links */}
-      <section className="py-12 bg-gray-100">
+      {/* Se også */}
+      <section className="py-12 bg-gray-50">
         <div className="max-w-4xl mx-auto px-4">
-          <h2 className="text-xl font-bold text-[#1e3a5f] mb-4">
-            Andre ydelser i {config.by}
-          </h2>
-          <div className="flex flex-wrap gap-3">
-            <Link
-              href="/"
-              className="text-[#1e3a5f] hover:text-[#f97316] underline text-sm"
-            >
-              {config.fag} {config.by}
-            </Link>
+          <h2 className="text-xl font-bold text-[#1e3a5f] mb-6">Se også</h2>
+          <div className="grid sm:grid-cols-2 gap-4">
             {config.clusterPages
               .filter((p) => p.slug !== slug)
+              .slice(0, 4)
               .map((p) => (
-                <Link
-                  key={p.slug}
-                  href={`/${p.slug}`}
-                  className="text-[#1e3a5f] hover:text-[#f97316] underline text-sm"
-                >
-                  {p.h1}
+                <Link key={p.slug} href={`/${p.slug}`}
+                      className="block p-4 bg-white rounded-lg border hover:border-orange-400 hover:shadow transition-all">
+                  <div className="font-semibold text-[#1e3a5f]">{p.h1}</div>
+                  <div className="text-sm text-gray-500 mt-1">Læs mere &rarr;</div>
                 </Link>
               ))}
           </div>
